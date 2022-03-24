@@ -1,17 +1,21 @@
+import { useEffect, useState } from 'react'
 import Sudoku from "./components/Sudoku"
+import { createSudokuMap, findCandidates } from './helpers/sudoku-solver'
+import { sudokuList } from './sudokus/hard'
 
 function App() {
-	const sudokuArray = [
-		[0, 2, 0, 0, 0, 7, 0, 3, 0],
-		[0, 0, 0, 6, 0, 0, 1, 9, 7],
-		[9, 0, 0, 3, 0, 0, 2, 0, 4],
-		[0, 6, 0, 0, 5, 0, 8, 4, 0],
-		[0, 0, 8, 0, 2, 0, 3, 0, 0],
-		[0, 9, 4, 0, 6, 0, 0, 5, 0],
-		[6, 0, 2, 0, 0, 4, 0, 0, 1],
-		[3, 4, 9, 0, 0, 8, 0, 0, 0],
-		[0, 7, 0, 2, 0, 0, 0, 8, 0],
-	]
+	const sudokuArray = sudokuList[0]
+	const [sudokuMap, setSudokuMap] = useState<any>(null)
+	useEffect(() => {
+		const initialMap = createSudokuMap(sudokuArray)
+		setSudokuMap(initialMap)
+	}, [])
+	
+
+	const solve = () => {
+		const newMap = findCandidates(sudokuMap)
+		setSudokuMap(newMap)
+	}
 	return (
 		<section className="text-center">
 			<h1>Sudoku Resolver</h1>
@@ -21,9 +25,9 @@ function App() {
 				<li>Créer une fonction qui cherche à remplir le sudoku</li>
 			</ol>
 			<div id="sudoku">
-				<Sudoku numbers={sudokuArray} />
+				<Sudoku map={sudokuMap} />
 			</div>
-			<button>Solve Sudoku</button>
+			<button onClick={solve}>Solve Sudoku</button>
 		</section>
 	)
 }

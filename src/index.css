@@ -4,7 +4,7 @@
 
 :root {
   --sudoku-border: 2px solid rgb(0, 9, 128);
-  --sudoku-cell: 40px;
+  --sudoku-cell: 60px;
 }
 
 td {

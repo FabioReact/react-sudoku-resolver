@@ -1,16 +1,17 @@
 import { render, screen } from "@testing-library/react"
+import { createSudokuMap } from '../helpers/sudoku-solver'
 import Sudoku from "./Sudoku"
 
 test("should render an error if sudoku is not valid 1x1", () => {
 	const sudokuArray = [[]]
-	render(<Sudoku numbers={sudokuArray} />)
+	render(<Sudoku map={sudokuArray} />)
 	const error = screen.getByText(/not a correct sudoku/i)
 	expect(error).toBeInTheDocument()
 })
 
 test("should render an error if sudoku is not valid 9x1", () => {
 	const sudokuArray = [[], [], [], [], [], [], [], [], []]
-	render(<Sudoku numbers={sudokuArray} />)
+	render(<Sudoku map={sudokuArray} />)
 	const error = screen.getByText(/not a correct sudoku/i)
 	expect(error).toBeInTheDocument()
 })
@@ -27,7 +28,8 @@ test("should render a sudoku table is array is valid", () => {
     [3,4,9,0,0,8,0,0,0],
     [0,7,0,2,0,0,0,8,0],
   ]
-	render(<Sudoku numbers={sudokuArray} />)
+	const initialMap = createSudokuMap(sudokuArray)
+	render(<Sudoku map={initialMap} />)
 	const table = screen.getByRole('table')
 	expect(table).toBeInTheDocument()
 })

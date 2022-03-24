@@ -1,4 +1,4 @@
-import { extractNumbers, Shape, checkValidNumbers, isEveryElementUnique } from "./sudoku-solver"
+import { extractNumbers, Shape, checkValidNumbers, isEveryElementUnique, createSudokuMap } from "./sudoku-solver"
 
 const sudokuArray = [
 	[0, 2, 0, 0, 0, 7, 0, 3, 0],
@@ -12,34 +12,36 @@ const sudokuArray = [
 	[0, 7, 0, 2, 0, 0, 0, 8, 0],
 ]
 
+const sudokuMap = createSudokuMap(sudokuArray)
+
 describe("extractNumbers", () => {
 	test("should return first line", () => {
-		const result = extractNumbers(sudokuArray, Shape.LINE, 0, 0)
+		const result = extractNumbers(sudokuMap, Shape.LINE, 0, 0)
 		expect(result).toEqual([0, 2, 0, 0, 0, 7, 0, 3, 0])
 	})
 
 	test("should return 9nth line", () => {
-		const result = extractNumbers(sudokuArray, Shape.LINE, 0, 8)
+		const result = extractNumbers(sudokuMap, Shape.LINE, 0, 8)
 		expect(result).toEqual([0, 7, 0, 2, 0, 0, 0, 8, 0])
 	})
 
 	test("should return first column", () => {
-		const result = extractNumbers(sudokuArray, Shape.COLUMN, 0, 0)
+		const result = extractNumbers(sudokuMap, Shape.COLUMN, 0, 0)
 		expect(result).toEqual([0, 0, 9, 0, 0, 0, 6, 3, 0])
 	})
 
 	test("should return 9nth colum", () => {
-		const result = extractNumbers(sudokuArray, Shape.COLUMN, 8, 0)
+		const result = extractNumbers(sudokuMap, Shape.COLUMN, 8, 0)
 		expect(result).toEqual([0, 7, 4, 0, 0, 0, 1, 0, 0])
 	})
 
 	test("should return first square", () => {
-		const result = extractNumbers(sudokuArray, Shape.SQUARE, 0, 0)
+		const result = extractNumbers(sudokuMap, Shape.SQUARE, 0, 0)
 		expect(result).toEqual([0, 2, 0, 0, 0, 0, 9, 0, 0])
 	})
 
 	test("should return 9nth square", () => {
-		const result = extractNumbers(sudokuArray, Shape.SQUARE, 8, 8)
+		const result = extractNumbers(sudokuMap, Shape.SQUARE, 8, 8)
 		expect(result).toEqual([0, 0, 1, 0, 0, 0, 0, 8, 0])
 	})
 })
