@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import Sudoku from "./components/Sudoku"
-import { createSudokuMap, findCandidates } from './helpers/sudoku-solver'
+import { backtracking, createSudokuMap, findCandidates } from './helpers/sudoku-solver'
 import { sudokuList } from './sudokus/hard'
 
 function App() {
-	const sudokuArray = sudokuList[0]
+	const sudokuArray = sudokuList[1]
 	const [sudokuMap, setSudokuMap] = useState<any>(null)
 	useEffect(() => {
 		const initialMap = createSudokuMap(sudokuArray)
@@ -14,8 +14,15 @@ function App() {
 
 	const solve = () => {
 		const newMap = findCandidates(sudokuMap)
-		setSudokuMap(newMap)
+		setSudokuMap([...newMap])
 	}
+
+	const solveWithBacktracking = () => {
+		const newMap = [...sudokuMap]
+		backtracking(sudokuMap, 0)
+		setSudokuMap([...newMap])
+	}
+
 	return (
 		<section className="text-center">
 			<h1>Sudoku Resolver</h1>
@@ -28,6 +35,7 @@ function App() {
 				<Sudoku map={sudokuMap} />
 			</div>
 			<button onClick={solve}>Solve Sudoku</button>
+			<button onClick={solveWithBacktracking}>Backtracking</button>
 		</section>
 	)
 }
